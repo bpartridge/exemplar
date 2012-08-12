@@ -10,7 +10,7 @@
     return (obj != null ? obj.toString() : void 0) === '[object Array]';
   };
 
-  module.exports = Exemplar = (function() {
+  Exemplar = (function() {
 
     function Exemplar(options) {
       options || (options = {});
@@ -104,12 +104,15 @@
       return true;
     };
 
-    Exemplar.prototype.inspect = function() {
-      return "[Exemplar: " + this.allowedTypeNamesByKey + "]";
-    };
-
     return Exemplar;
 
   })();
+
+  if (typeof module !== "undefined" && module !== null) {
+    module.exports = Exemplar;
+    Exemplar.Exemplar = Exemplar;
+  } else if (typeof window !== "undefined" && window !== null) {
+    window.Exemplar = Exemplar;
+  }
 
 }).call(this);

@@ -5,7 +5,7 @@ NULL_TYPE_NAME = 'null'
 
 isArray = Array.isArray || (obj) -> (obj?.toString()) == '[object Array]'
 
-module.exports = class Exemplar
+class Exemplar
   constructor: (options) ->
     options ||= {}
     @disallowExtraKeys = options.disallowExtraKeys || false
@@ -60,4 +60,8 @@ module.exports = class Exemplar
           if @disallowExtraKeys then return false 
     return true
 
-  inspect: -> "[Exemplar: #{@allowedTypeNamesByKey}]"
+if module?
+  module.exports = Exemplar
+  Exemplar.Exemplar = Exemplar # so you can use require('exemplar').Exemplar
+else if window?
+  window.Exemplar = Exemplar
