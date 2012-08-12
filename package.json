@@ -1,0 +1,21 @@
+{
+  "name": "exemplar",
+  "description": "Describe and validate schemas for objects by using simple JSON examples, not a domain-specific language",
+  "author": "Brenton Partridge <bapartridge@gmail.com>",
+  "version": "0.1.0",
+  "main": "exemplar.js",
+  "scripts": {
+    "test": "node_modules/.bin/jasmine-node ."
+  },
+  "dependencies": {
+    "underscore": "*"
+  },
+  "devDependencies": {
+    "jasmine-node": "*",
+    "coffee-script": "*"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
