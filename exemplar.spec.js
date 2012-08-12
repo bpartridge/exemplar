@@ -31,7 +31,7 @@
         foo: 'bar'
       });
     });
-    return it('should accept an array type by its member types', function() {
+    it('should accept an array type by its member types', function() {
       e.addExample({
         foo: ['bar', 'baz']
       });
@@ -40,6 +40,23 @@
       });
       return expect(e).not.toAccept({
         foo: [1, 2]
+      });
+    });
+    return it('should accept all nested object types as equal', function() {
+      e.addExample({
+        foo: {
+          boo: 'bar'
+        }
+      });
+      expect(e).toAccept({
+        foo: {
+          boo: 'baz'
+        }
+      });
+      return expect(e).toAccept({
+        foo: {
+          boo: 3
+        }
       });
     });
   });

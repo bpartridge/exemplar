@@ -1,9 +1,9 @@
 # Exemplar is a utility class that allows us to define a schema
 # using a series of examples.
 
-_ = require 'underscore'
-
 NULL_TYPE_NAME = 'null'
+
+isArray = Array.isArray || (obj) -> (obj?.toString()) == '[object Array]'
 
 module.exports = class Exemplar
   constructor: (options) ->
@@ -14,12 +14,19 @@ module.exports = class Exemplar
 
   typeNameFor: (val) ->
     if not val? then return NULL_TYPE_NAME
-    else if _.isArray(val)
-      childTypes = _(val).map (child) -> @typeNameFor child
-      childTypes = _(childTypes).uniq()
+    else if isArray(val)
+      childTypes = ((@typeNameFor child) for child in val)
+      if childTypes.length == 0
+        return '[*]'
+      else
+        # If there's any mismatch, return a wildcard (heterogeneous) array
+        for childType in childTypes
+          if childType != childTypes[0]
+            return '[*]'
 
-      if childTypes.length == 1 then return '[' + childTypes[0] + ']'
-      else return '[*]'
+        # Otherwise, return a homogeneous array
+        return '[' + childTypes[0] + ']'
+    # TODO: handle nested objects
     else return typeof val
 
   addExample: (ex) ->
@@ -52,3 +59,5 @@ module.exports = class Exemplar
         else
           if @disallowExtraKeys then return false 
     return true
+
+  inspect: -> "[Exemplar: #{@allowedTypeNamesByKey}]"

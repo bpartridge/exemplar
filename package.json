@@ -7,9 +7,7 @@
   "scripts": {
     "test": "node_modules/.bin/jasmine-node ."
   },
-  "dependencies": {
-    "underscore": "*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "jasmine-node": "*",
     "coffee-script": "*"

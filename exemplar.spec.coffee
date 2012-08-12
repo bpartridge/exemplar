@@ -8,7 +8,8 @@ describe 'exemplar', ->
   beforeEach ->
     e = new Exemplar
     @addMatchers
-      toAccept: (o) -> @actual.check(o)
+      toAccept: (o) ->
+        return @actual.check(o)
 
   it 'by default, should consider anything valid without an example', ->
     expect(e).toAccept({foo:'bar'})
@@ -22,3 +23,8 @@ describe 'exemplar', ->
     e.addExample {foo:['bar','baz']}
     expect(e).toAccept({foo:['hi','bye']})
     expect(e).not.toAccept({foo:[1,2]})
+
+  it 'should accept all nested object types as equal', ->
+    e.addExample {foo:{boo:'bar'}}
+    expect(e).toAccept({foo:{boo:'baz'}})
+    expect(e).toAccept({foo:{boo:3}})
